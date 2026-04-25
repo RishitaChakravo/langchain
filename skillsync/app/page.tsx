@@ -6,7 +6,7 @@ import CircularProgress from "./ui/CircularProgress";
 import { CheckCircle2, CheckCircle, Upload, Sparkles } from "lucide-react";
 
 type Response = {
-  match_percentage: number,
+  match_percentage: string,
   missing_skills: string[] | string,
   matching_skills: string[] | string,
   suggestions: string
@@ -48,7 +48,7 @@ export default function Home() {
     return "N/A";
   };
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 p-6 lg:p-12">
+    <div className="min-h-screen overflow-x-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 p-6 lg:p-12">
       <div className="max-w-6xl mx-auto mb-12">
         <div className="flex gap-2 items-center">
           <Sparkles className="w-8 h-8 text-indigo-500 " />
@@ -57,7 +57,7 @@ export default function Home() {
         <p>Upload your resume and get instant feedback on your fit for the position</p>
       </div>
       <div className="flex flex-col justify-center items-center gap-5 ">
-        <div className="flex flex-col lg:flex-row gap-5 w-screen justify-center items-center ">
+        <div className="flex flex-col lg:flex-row gap-5 w-full justify-center items-center ">
           <div className="flex flex-col gap-2 p-5 border w-150 lg:w-[1.5/3] min-h-[450] rounded-lg bg-white/5 border-slate-700">
             <label className="text-xl font-bold ">Upload File</label>
             <label className="flex flex-col items-center justify-center py-4 h-35 text-center border-2 border-dashed border-slate-700 hover:cursor-pointer px-2  rounded-md ">
@@ -106,7 +106,9 @@ export default function Home() {
             </div> : <>
               {response ? (
                 <div className="flex gap-5">
-                  <div className="py-2 px-5 border-2 border-dashed border-slate-700 rounded-xl bg-slate-950/20"><CircularProgress value={response.match_percentage} /></div>
+                  <div className="flex justify-center items-center py-2 px-5 border-2 border-dashed border-slate-700 rounded-xl bg-slate-950/20">
+                    <CircularProgress value={parseFloat(response.match_percentage) || 0} />
+                  </div>
                   <div className="border-2 border-slate-700 border-dashed bg-slate-950/10 rounded-xl p-4 flex flex-col gap-4 w-64">
 
                     <div>
@@ -141,7 +143,7 @@ export default function Home() {
 
           </div>
         </div>
-        <button className="font-bold hover:cursor-pointer px-50 py-2 rounded-lg bg-blue-500 hover:bg-blue-700" onClick={() => submit(file, jd)}>Analyze Resume</button>
+        <button className="font-bold hover:cursor-pointer px-10 w-full max-w-md py-2 rounded-lg bg-blue-500 hover:bg-blue-700" onClick={() => submit(file, jd)}>Analyze Resume</button>
       </div>
     </div>
   );
